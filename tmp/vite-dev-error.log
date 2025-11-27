@@ -1,0 +1,399 @@
+^C^C오후 7:04:15[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] C:/AI/foodscan/src/index.css:1:17: Unknown word font-family[39m
+  Plugin: [35mvite:css[39m
+  File: [36mC:/AI/foodscan/src/index.css[39m:1:16
+[33m  1  |  ﻿@font-face {`n  font-family: 'GMarketSans';`n  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1....
+     |                  ^
+  2  |  [39m
+      at Input.error (C:\AI\foodscan\node_modules\postcss\lib\input.js:135:16)
+      at Parser.unknownWord (C:\AI\foodscan\node_modules\postcss\lib\parser.js:595:22)
+      at Parser.decl (C:\AI\foodscan\node_modules\postcss\lib\parser.js:236:16)
+      at Parser.other (C:\AI\foodscan\node_modules\postcss\lib\parser.js:401:18)
+      at Parser.parse (C:\AI\foodscan\node_modules\postcss\lib\parser.js:472:16)
+      at parse (C:\AI\foodscan\node_modules\postcss\lib\parse.js:11:12)
+      at new LazyResult (C:\AI\foodscan\node_modules\postcss\lib\lazy-result.js:165:16)
+      at Processor.process (C:\AI\foodscan\node_modules\postcss\lib\processor.js:53:14)
+      at runPostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32052:68)
+      at async compilePostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32036:6)
+      at async compileCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31966:26)
+      at async TransformPluginContext.handler (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31499:54)
+      at async EnvironmentPluginContainer.transform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:30905:14)
+      at async loadAndTransform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:26043:26)
+      at async viteTransformMiddleware (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:27118:20)
+[2m오후 7:05:13[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: [postcss] C:/AI/foodscan/src/index.css:1:17: Unknown word font-family
+  Plugin: [35mvite:css[39m
+  File: [36mC:/AI/foodscan/src/index.css[39m:1:16
+[33m  1  |  ﻿@font-face {`n  font-family: 'GMarketSans';`n  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1....
+     |                  ^
+  2  |  [39m
+[2m오후 7:05:13[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] C:/AI/foodscan/src/index.css:1:17: Unknown word font-family[39m
+  Plugin: [35mvite:css[39m
+  File: [36mC:/AI/foodscan/src/index.css[39m:1:16
+[33m  1  |  ﻿@font-face {`n  font-family: 'GMarketSans';`n  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1....
+     |                  ^
+  2  |  [39m
+      at Input.error (C:\AI\foodscan\node_modules\postcss\lib\input.js:135:16)
+      at Parser.unknownWord (C:\AI\foodscan\node_modules\postcss\lib\parser.js:595:22)
+      at Parser.decl (C:\AI\foodscan\node_modules\postcss\lib\parser.js:236:16)
+      at Parser.other (C:\AI\foodscan\node_modules\postcss\lib\parser.js:401:18)
+      at Parser.parse (C:\AI\foodscan\node_modules\postcss\lib\parser.js:472:16)
+      at parse (C:\AI\foodscan\node_modules\postcss\lib\parse.js:11:12)
+      at new LazyResult (C:\AI\foodscan\node_modules\postcss\lib\lazy-result.js:165:16)
+      at Processor.process (C:\AI\foodscan\node_modules\postcss\lib\processor.js:53:14)
+      at runPostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32052:68)
+      at async compilePostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32036:6)
+      at async compileCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31966:26)
+      at async TransformPluginContext.handler (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31499:54)
+      at async EnvironmentPluginContainer.transform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:30905:14)
+      at async loadAndTransform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:26043:26)
+      at async viteTransformMiddleware (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:27118:20)
+[2m오후 7:05:33[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: [postcss] C:/AI/foodscan/src/index.css:1:17: Unknown word font-family
+  Plugin: [35mvite:css[39m
+  File: [36mC:/AI/foodscan/src/index.css[39m:1:16
+[33m  1  |  ﻿@font-face {`n  font-family: 'GMarketSans';`n  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1....
+     |                  ^
+  2  |  [39m
+[2m오후 7:05:33[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] C:/AI/foodscan/src/index.css:1:17: Unknown word font-family[39m
+  Plugin: [35mvite:css[39m
+  File: [36mC:/AI/foodscan/src/index.css[39m:1:16
+[33m  1  |  ﻿@font-face {`n  font-family: 'GMarketSans';`n  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1....
+     |                  ^
+  2  |  [39m
+      at Input.error (C:\AI\foodscan\node_modules\postcss\lib\input.js:135:16)
+      at Parser.unknownWord (C:\AI\foodscan\node_modules\postcss\lib\parser.js:595:22)
+      at Parser.decl (C:\AI\foodscan\node_modules\postcss\lib\parser.js:236:16)
+      at Parser.other (C:\AI\foodscan\node_modules\postcss\lib\parser.js:401:18)
+      at Parser.parse (C:\AI\foodscan\node_modules\postcss\lib\parser.js:472:16)
+      at parse (C:\AI\foodscan\node_modules\postcss\lib\parse.js:11:12)
+      at new LazyResult (C:\AI\foodscan\node_modules\postcss\lib\lazy-result.js:165:16)
+      at Processor.process (C:\AI\foodscan\node_modules\postcss\lib\processor.js:53:14)
+      at runPostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32052:68)
+      at async compilePostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32036:6)
+      at async compileCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31966:26)
+      at async TransformPluginContext.handler (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31499:54)
+      at async EnvironmentPluginContainer.transform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:30905:14)
+      at async loadAndTransform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:26043:26)
+      at async viteTransformMiddleware (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:27118:20)
+[2m오후 7:05:51[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] C:/AI/foodscan/src/index.css:1:17: Unknown word font-family[39m
+  Plugin: [35mvite:css[39m
+  File: [36mC:/AI/foodscan/src/index.css[39m:1:16
+[33m  1  |  ﻿@font-face {`n  font-family: 'GMarketSans';`n  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1....
+     |                  ^
+  2  |  [39m
+      at Input.error (C:\AI\foodscan\node_modules\postcss\lib\input.js:135:16)
+      at Parser.unknownWord (C:\AI\foodscan\node_modules\postcss\lib\parser.js:595:22)
+      at Parser.decl (C:\AI\foodscan\node_modules\postcss\lib\parser.js:236:16)
+      at Parser.other (C:\AI\foodscan\node_modules\postcss\lib\parser.js:401:18)
+      at Parser.parse (C:\AI\foodscan\node_modules\postcss\lib\parser.js:472:16)
+      at parse (C:\AI\foodscan\node_modules\postcss\lib\parse.js:11:12)
+      at new LazyResult (C:\AI\foodscan\node_modules\postcss\lib\lazy-result.js:165:16)
+      at Processor.process (C:\AI\foodscan\node_modules\postcss\lib\processor.js:53:14)
+      at runPostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32052:68)
+      at async compilePostCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:32036:6)
+      at async compileCSS (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31966:26)
+      at async TransformPluginContext.handler (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:31499:54)
+      at async EnvironmentPluginContainer.transform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:30905:14)
+      at async loadAndTransform (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:26043:26)
+      at async viteTransformMiddleware (file:///C:/AI/foodscan/node_modules/vite/dist/node/chunks/config.js:27118:20)
+[2m오후 7:17:53[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\AI\foodscan\src\Home.jsx: Unexpected token, expected "..." (462:161)
+
+[0m [90m 460 |[31m                 [33m<[31m[33mdiv[31m
+ [90m 461 |[31m                   key[33m=[31m{item[33m.[31mkey}
+[31m[1m>[22m[31m[90m 462 |[31m                   className[33m=[31m{[32m`rounded-lg border border-[${PRIMARY_COLOR}]/20 bg-[${PRIMARY_COLOR}]/5 px-3 py-2 text-left shadow-sm`[31m} {[90m/* 💡 컨셉 색상 기반 테두리/배경 변경 */[31m}
+ [90m     |[31m                                                                                                                                                                  [31m[1m^[22m[31m
+ [90m 463 |[31m                 [33m>[31m
+ [90m 464 |[31m                   [33m<[31m[33mp[31m className[33m=[31m{[32m`text-[11px] uppercase tracking-[0.15em] text-[${LIGHT_ACCENT}]`[31m}[33m>[31m {[90m/* 💡 악센트 색상 변경 */[31m}
+ [90m 465 |[31m                     {item[33m.[31mlabel}[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/AI/foodscan/src/Home.jsx[39m:462:161
+[33m  468 |                      {item.value}
+  469 |                      <span className={`ml-1 text-sm font-medium text-[${DARK_ACCENT}]/70`}>{item.unit}</span> {/* 💡 텍...
+  470 |                    </p>
+      |   ^
+  471 |                  </div>
+  472 |                ))}[39m
+      at constructor (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:367:19)
+      at JSXParserMixin.raise (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6624:19)
+      at JSXParserMixin.unexpected (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6644:16)
+      at JSXParserMixin.expect (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6924:12)
+      at JSXParserMixin.jsxParseAttribute (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4674:12)
+      at JSXParserMixin.jsxParseOpeningElementAfterName (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4696:28)
+      at JSXParserMixin.jsxParseOpeningElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4691:17)
+      at JSXParserMixin.jsxParseElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4715:33)
+      at JSXParserMixin.jsxParseElement (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4778:17)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4788:19)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12567:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11747:28)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at JSXParserMixin.parseFunctionBody (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12167:24)
+      at JSXParserMixin.parseArrowExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12149:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11759:12)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12567:17)
+      at JSXParserMixin.parseExprListItem (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12249:18)
+      at JSXParserMixin.parseCallExpressionArguments (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11316:22)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11250:29)
+[2m오후 7:18:09[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: C:\AI\foodscan\src\Home.jsx: Unexpected token, expected "..." (462:161)
+
+[0m [90m 460 |[39m                 [33m<[39m[33mdiv[39m
+ [90m 461 |[39m                   key[33m=[39m{item[33m.[39mkey}
+[31m[1m>[22m[39m[90m 462 |[39m                   className[33m=[39m{[32m`rounded-lg border border-[${PRIMARY_COLOR}]/20 bg-[${PRIMARY_COLOR}]/5 px-3 py-2 text-left shadow-sm`[39m} {[90m/* 💡 컨셉 색상 기반 테두리/배경 변경 */[39m}
+ [90m     |[39m                                                                                                                                                                  [31m[1m^[22m[39m
+ [90m 463 |[39m                 [33m>[39m
+ [90m 464 |[39m                   [33m<[39m[33mp[39m className[33m=[39m{[32m`text-[11px] uppercase tracking-[0.15em] text-[${LIGHT_ACCENT}]`[39m}[33m>[39m {[90m/* 💡 악센트 색상 변경 */[39m}
+ [90m 465 |[39m                     {item[33m.[39mlabel}[0m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/AI/foodscan/src/Home.jsx[39m:462:161
+[33m  468 |                      {item.value}
+  469 |                      <span className={`ml-1 text-sm font-medium text-[${DARK_ACCENT}]/70`}>{item.unit}</span> {/* 💡 텍...
+  470 |                    </p>
+      |   ^
+  471 |                  </div>
+  472 |                ))}[39m
+[2m오후 7:18:09[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\AI\foodscan\src\Home.jsx: Unexpected token, expected "..." (462:161)
+
+[0m [90m 460 |[31m                 [33m<[31m[33mdiv[31m
+ [90m 461 |[31m                   key[33m=[31m{item[33m.[31mkey}
+[31m[1m>[22m[31m[90m 462 |[31m                   className[33m=[31m{[32m`rounded-lg border border-[${PRIMARY_COLOR}]/20 bg-[${PRIMARY_COLOR}]/5 px-3 py-2 text-left shadow-sm`[31m} {[90m/* 💡 컨셉 색상 기반 테두리/배경 변경 */[31m}
+ [90m     |[31m                                                                                                                                                                  [31m[1m^[22m[31m
+ [90m 463 |[31m                 [33m>[31m
+ [90m 464 |[31m                   [33m<[31m[33mp[31m className[33m=[31m{[32m`text-[11px] uppercase tracking-[0.15em] text-[${LIGHT_ACCENT}]`[31m}[33m>[31m {[90m/* 💡 악센트 색상 변경 */[31m}
+ [90m 465 |[31m                     {item[33m.[31mlabel}[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/AI/foodscan/src/Home.jsx[39m:462:161
+[33m  468 |                      {item.value}
+  469 |                      <span className={`ml-1 text-sm font-medium text-[${DARK_ACCENT}]/70`}>{item.unit}</span> {/* 💡 텍...
+  470 |                    </p>
+      |   ^
+  471 |                  </div>
+  472 |                ))}[39m
+      at constructor (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:367:19)
+      at JSXParserMixin.raise (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6624:19)
+      at JSXParserMixin.unexpected (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6644:16)
+      at JSXParserMixin.expect (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6924:12)
+      at JSXParserMixin.jsxParseAttribute (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4674:12)
+      at JSXParserMixin.jsxParseOpeningElementAfterName (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4696:28)
+      at JSXParserMixin.jsxParseOpeningElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4691:17)
+      at JSXParserMixin.jsxParseElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4715:33)
+      at JSXParserMixin.jsxParseElement (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4778:17)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4788:19)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12567:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11747:28)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at JSXParserMixin.parseFunctionBody (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12167:24)
+      at JSXParserMixin.parseArrowExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12149:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11759:12)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12567:17)
+      at JSXParserMixin.parseExprListItem (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12249:18)
+      at JSXParserMixin.parseCallExpressionArguments (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11316:22)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11250:29)
+[2m오후 7:19:26[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: C:\AI\foodscan\src\Home.jsx: Unexpected token, expected "," (421:103)
+
+[0m [90m 419 |[39m           )}
+ [90m 420 |[39m           {result[33m.[39mnotes [33m&&[39m (
+[31m[1m>[22m[39m[90m 421 |[39m             [33m<[39m[33mp[39m className[33m=[39m{[32m`mt-2 text-sm leading-relaxed text-[#${DARK_ACCENT}]/80`[39m}[33m>[39m{result[33m.[39mnotes}[33m<[39m[35m/p> {/[39m[33m*[39m 💡 텍스트 색상 변경 [33m*[39m[33m/[39m}
+ [90m     |[39m                                                                                                        [31m[1m^[22m[39m
+ [90m 422 |[39m           )}
+ [90m 423 |[39m         [33m<[39m[33m/[39m[33mdiv[39m[33m>[39m
+ [90m 424 |[39m[0m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/AI/foodscan/src/Home.jsx[39m:421:103
+[33m  429 |              </p>
+  430 |              <div className="mt-3 flex flex-col gap-2 text-sm">
+  431 |                <div
+      |    ^
+  432 |                  className={`inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold ${
+  433 |                    riskPillStyles[riskLevel] ?? `border-[#${PRIMARY_COLOR}]/40 bg-[#${PRIMARY_COLOR}]/15 text-[#${DARK...[39m
+[2m오후 7:19:26[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\AI\foodscan\src\Home.jsx: Unexpected token, expected "," (421:103)
+
+[0m [90m 419 |[31m           )}
+ [90m 420 |[31m           {result[33m.[31mnotes [33m&&[31m (
+[31m[1m>[22m[31m[90m 421 |[31m             [33m<[31m[33mp[31m className[33m=[31m{[32m`mt-2 text-sm leading-relaxed text-[#${DARK_ACCENT}]/80`[31m}[33m>[31m{result[33m.[31mnotes}[33m<[31m[35m/p> {/[31m[33m*[31m 💡 텍스트 색상 변경 [33m*[31m[33m/[31m}
+ [90m     |[31m                                                                                                        [31m[1m^[22m[31m
+ [90m 422 |[31m           )}
+ [90m 423 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 424 |[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/AI/foodscan/src/Home.jsx[39m:421:103
+[33m  429 |              </p>
+  430 |              <div className="mt-3 flex flex-col gap-2 text-sm">
+  431 |                <div
+      |    ^
+  432 |                  className={`inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold ${
+  433 |                    riskPillStyles[riskLevel] ?? `border-[#${PRIMARY_COLOR}]/40 bg-[#${PRIMARY_COLOR}]/15 text-[#${DARK...[39m
+      at constructor (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:367:19)
+      at JSXParserMixin.raise (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6624:19)
+      at JSXParserMixin.unexpected (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6644:16)
+      at JSXParserMixin.expect (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6924:12)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11733:14)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOpBaseRightExpr (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11050:34)
+      at JSXParserMixin.parseExprOpRightExpr (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11045:21)
+      at JSXParserMixin.parseExprOp (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11011:27)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10972:17)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at JSXParserMixin.parseExpressionBase (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10848:23)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10844:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10844:17)
+      at JSXParserMixin.jsxParseExpressionContainer (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4661:31)
+      at JSXParserMixin.jsxParseElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4740:36)
+      at JSXParserMixin.jsxParseElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4727:32)
+      at JSXParserMixin.jsxParseElement (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4778:17)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4788:19)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12567:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11747:28)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at JSXParserMixin.parseExpressionBase (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10848:23)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10844:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12495:16)
+[2m오후 7:19:33[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\AI\foodscan\src\Home.jsx: Unexpected token, expected "," (421:103)
+
+[0m [90m 419 |[31m           )}
+ [90m 420 |[31m           {result[33m.[31mnotes [33m&&[31m (
+[31m[1m>[22m[31m[90m 421 |[31m             [33m<[31m[33mp[31m className[33m=[31m{[32m`mt-2 text-sm leading-relaxed text-[#${DARK_ACCENT}]/80`[31m}[33m>[31m{result[33m.[31mnotes}[33m<[31m[35m/p> {/[31m[33m*[31m 💡 텍스트 색상 변경 [33m*[31m[33m/[31m}
+ [90m     |[31m                                                                                                        [31m[1m^[22m[31m
+ [90m 422 |[31m           )}
+ [90m 423 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 424 |[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/AI/foodscan/src/Home.jsx[39m:421:103
+[33m  429 |              </p>
+  430 |              <div className="mt-3 flex flex-col gap-2 text-sm">
+  431 |                <div
+      |    ^
+  432 |                  className={`inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold ${
+  433 |                    riskPillStyles[riskLevel] ?? `border-[#${PRIMARY_COLOR}]/40 bg-[#${PRIMARY_COLOR}]/15 text-[#${DARK...[39m
+      at constructor (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:367:19)
+      at JSXParserMixin.raise (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6624:19)
+      at JSXParserMixin.unexpected (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6644:16)
+      at JSXParserMixin.expect (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:6924:12)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11733:14)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOpBaseRightExpr (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11050:34)
+      at JSXParserMixin.parseExprOpRightExpr (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11045:21)
+      at JSXParserMixin.parseExprOp (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11011:27)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10972:17)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at JSXParserMixin.parseExpressionBase (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10848:23)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10844:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10844:17)
+      at JSXParserMixin.jsxParseExpressionContainer (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4661:31)
+      at JSXParserMixin.jsxParseElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4740:36)
+      at JSXParserMixin.jsxParseElementAt (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4727:32)
+      at JSXParserMixin.jsxParseElement (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4778:17)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4788:19)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12500:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10864:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12567:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11747:28)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11395:23)
+      at JSXParserMixin.parseExprAtom (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:4793:20)
+      at JSXParserMixin.parseExprSubscripts (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11145:23)
+      at JSXParserMixin.parseUpdate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11130:21)
+      at JSXParserMixin.parseMaybeUnary (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:11110:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10963:61)
+      at JSXParserMixin.parseExprOps (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10968:23)
+      at JSXParserMixin.parseMaybeConditional (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10945:23)
+      at JSXParserMixin.parseMaybeAssign (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10895:21)
+      at JSXParserMixin.parseExpressionBase (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10848:23)
+      at C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:10844:39
+      at JSXParserMixin.allowInAnd (C:\AI\foodscan\node_modules\@babel\parser\lib\index.js:12495:16)
+^C^C

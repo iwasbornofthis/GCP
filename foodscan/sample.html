@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그린 웰니스 에코 샘플</title>
+    <style>
+        /* 🎨 색상 변수 정의 */
+        :root {
+            --primary-color: #50C878;    /* 클래식 에메랄드 (주요색) */
+            --secondary-color: #8FBC8F;  /* 짙은 이끼 (보조색) */
+            --background-color: #FAFAFA; /* 거의 흰색 (배경색) */
+            --accent-color: #228B22;     /* 자연의 숲 (강조색/텍스트) */
+            --text-color: #333333;       /* 일반 텍스트 */
+        }
+
+        /* 🖼️ 기본 스타일 설정 */
+        body {
+            font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 🌲 헤더 (주요색 사용) */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        /* 🌳 메인 콘텐츠 */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* 🟢 카드 (보조색 사용) */
+        .card {
+            background-color: #FFFFFF; /* 카드 배경은 순백색 */
+            border: 1px solid var(--secondary-color); /* 보조색 테두리 */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 🖋️ 텍스트 스타일 (강조색 사용) */
+        .card h2 {
+            color: var(--accent-color); /* 제목은 자연의 숲 색상 */
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        /* 🎯 CTA 버튼 (주요색 사용) */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #40B068; /* 주요색보다 약간 어둡게 hover 효과 */
+        }
+
+        /* 📝 푸터 (강조색 사용) */
+        footer {
+            background-color: var(--accent-color);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌿 그린 웰니스 라이프</h1>
+        <p>환경과 건강을 생각하는 지속 가능한 삶을 위한 첫걸음</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>🌍 우리의 약속</h2>
+            <p>우리는 지속 가능한 미래를 위해 친환경적인 제품만을 엄선합니다. 모든 제품은 자연에서 왔으며, 당신의 건강을 최우선으로 생각합니다.</p>
+            <p><strong>클래식 에메랄드 (#50C878)</strong> 색상 버튼을 확인하세요.</p>
+            <a href="#" class="cta-button">제품 보러가기</a>
+        </div>
+
+        <div class="card">
+            <h2>🥕 건강한 선택</h2>
+            <p>정기적인 건강 정보를 제공하여 올바른 생활 습관을 돕습니다. 짙은 이끼색 (#8FBC8F) 테두리가 깔끔하게 정보를 구분해 줍니다.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Green Wellness. All rights reserved.</p>
+        <p>푸터는 자연의 숲 (#228B22) 색상으로 안정감을 줍니다.</p>
+    </footer>
+
+</body>
+</html>

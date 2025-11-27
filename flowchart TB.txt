@@ -1,0 +1,62 @@
+flowchart TB
+    A1["사용자"] --> B1["React"]
+    B1 --> X["Laravel API 서버<br>/api/foods/analyze"]
+    X --> C1["이미지 검증 및 임시 저장"]
+    C1 --> C2["OpenAI GPT-4o 호출<br>음식 설명 추출"]
+    C2 --> C3["Food Matcher<br>FastAPI 호출<br>코드 매칭"]
+    C3 --> C5["영양소 & 혈당 위험도 계산 후 응답"] & D1["MySQL<br>음식 DB"]
+    C5 --> B2["결과 렌더링<br>영양소 &amp; 혈당 위험도"]
+
+    A1@{ shape: rect}
+    B1@{ shape: rect}
+    X@{ shape: rect}
+    C1@{ shape: rect}
+    C2@{ shape: rect}
+    C3@{ shape: rect}
+    C5@{ shape: rect}
+    D1@{ shape: cyl}
+    B2@{ shape: rect}
+     A1:::user
+     B1:::frontend
+     X:::highlight
+     C1:::backend
+     C2:::gpt
+     C3:::fastapi
+     C5:::backend
+     D1:::db
+     B2:::frontend
+    classDef user fill:#d2ebf9,stroke:#666,stroke-width:1px
+    classDef frontend fill:#fff2b3,stroke:#666,stroke-width:1px
+    classDef backend fill:#fbeff4,stroke:#666,stroke-width:1px
+    classDef db fill:#f9c3c8,stroke:#666,stroke-width:1px
+    classDef gpt fill:#c6e6c6,stroke:#666,stroke-width:1px
+    classDef fastapi fill:#c6e6c6,stroke:#666,stroke-width:1px
+    classDef highlight fill:#e0f1ff,stroke:#666,stroke-width:1px
+
+
+
+
+
+gantt
+    dateFormat  YYYY-MM-DD
+    title FoodScan 일정 (2025-10-01 ~ 2025-12-15)
+    axisFormat  %m/%d
+
+    section 데이터 정제
+    식품영양DB        :done,   task1, 2025-10-01, 2025-10-07
+    common_name 평균 보정       :done,   task2, 2025-10-08, 2025-10-18
+    수동 보정  :done,   task3, 2025-10-19, 2025-10-25
+
+    section 백엔드/AI 파이프라인
+    OpenAI + Food Matcher 연동  :done,   task4, 2025-10-26, 2025-11-05
+    FOODS 조회·혈당 위험도   :done,   task5, 2025-11-06, 2025-11-15
+    오류 수정         :active, task6, 2025-11-16, 2025-11-25
+
+    section 프런트엔드 UI
+    결과 화면 구조 정리         :done,   task7, 2025-11-05, 2025-11-12
+    반응형 웹페이지       :active, task8, 2025-11-13, 2025-11-20
+
+    section 테스트/문서
+    샘플 이미지 회귀 테스트     :        task9, 2025-11-21, 2025-11-30
+    de.docx 보고서 정리         :        task10, 2025-12-01, 2025-12-10
+    최종 점검             :        task11, 2025-12-11, 2025-12-15

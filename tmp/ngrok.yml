@@ -1,0 +1,10 @@
+﻿version: 2
+authtoken: 34xDOaMAsWnfB06EHXBHIOW41LC_3Bimzd2mmKd6o9PTY3NzL
+tunnels:
+  backend:
+    proto: http
+    addr: 127.0.0.1:8000
+    domain: ayana-sustentacular-wambly.ngrok-free.dev
+  frontend:
+    proto: http
+    addr: 127.0.0.1:5173

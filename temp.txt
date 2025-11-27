@@ -1,0 +1,184 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
+use RuntimeException;
+
+class FoodAnalysisService
+{
+    public function __construct()
+    {
+    }
+
+    public function detectFood(UploadedFile $photo): array
+    {
+        $apiKey = config('services.openai.key');
+
+        if (empty($apiKey)) {
+            throw new RuntimeException('OpenAI API ?¤ê? ?¤ì •?˜ì? ?Šì•˜?µë‹ˆ??');
+        }
+
+        $photoContents = @file_get_contents($photo->getRealPath());
+
+        if ($photoContents === false) {
+            throw new RuntimeException('?´ë?ì§€ ?Œì¼???½ì„ ???†ìŠµ?ˆë‹¤.');
+        }
+
+        $payload = [
+            'model' => config('services.openai.model', 'gpt-4o'),
+            'temperature' => 0.2,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => 'You are a food recognition expert. Identify the main food shown in the photo and respond in Korean.',
+                ],
+                [
+                    'role' => 'user',
+                    'content' => [
+                        [
+                            'type' => 'text',
+                            'text' => '?¬ì§„??ë³´ê³  ?Œì‹ ?´ë¦„ê³??ì‹ ê°??ìˆ˜ë¥?JSON?¼ë¡œ ?Œë ¤ì¤?',
+                        ],
+                        [
+                            'type' => 'image_url',
+                            'image_url' => [
+                                'url' => sprintf(
+                                    'data:%s;base64,%s',
+                                    $photo->getMimeType(),
+                                    base64_encode($photoContents)
+                                ),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'response_format' => [
+                'type' => 'json_schema',
+                'json_schema' => [
+                    'name' => 'food_detection',
+                    'schema' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'food' => [
+                                'type' => 'string',
+                                'description' => '?¸ì‹???€???Œì‹ ?´ë¦„',
+                            ],
+                            'confidence' => [
+                                'type' => 'number',
+                                'minimum' => 0,
+                                'maximum' => 1,
+                                'description' => 'ëª¨ë¸???´ë‹¹ ?ˆì¸¡???€??ê°–ëŠ” ?•ì‹ ??(0~1)',
+                            ],
+                        ],
+                        'required' => ['food'],
+                        'additionalProperties' => false,
+                    ],
+                ],
+            ],
+        ];
+
+        $response = Http::withToken($apiKey)
+            ->timeout(config('services.openai.timeout', 60))
+            ->post(
+                config('services.openai.endpoint', 'https://api.openai.com/v1/chat/completions'),
+                $payload
+            )
+            ->throw()
+            ->json();
+
+        $messageContent = $response['choices'][0]['message']['content'] ?? '';
+        $normalized = $this->normalizeContent($messageContent);
+
+        $decoded = json_decode($normalized, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE || ! is_array($decoded)) {
+            throw new RuntimeException('OpenAI ?‘ë‹µ???´ì„?˜ì? ëª»í–ˆ?µë‹ˆ??');
+        }
+
+        $result = [
+            'foodName' => $decoded['food'] ?? '?????†ìŒ',
+            'confidence' => $decoded['confidence'] ?? null,
+                    ];
+
+        return $this->attachBestMatch($result);
+    }
+
+    private function attachBestMatch(array $result): array
+    {
+        $match = $this->requestMatch($result['foodName'] ?? '');
+
+        if (! $match) {
+            return $result;
+        }
+
+        $food = $match['food'] ?? null;
+
+        if (! $food) {
+            return $result;
+        }
+
+        $result['matchedFood'] = [
+            'id' => $food['id'],
+            'food_code' => $food['food_code'],
+            'food_name' => $food['food_name'],
+            'score' => round((float) ($match['score'] ?? 0), 4),
+        ];
+
+        $result['nutrients'] = $food['nutrients'] ?? [];
+
+        return $result;
+    }
+
+    /**
+     * @param  mixed  $content
+     */
+    private function normalizeContent($content): string
+    {
+        if (is_string($content)) {
+            return $content;
+        }
+
+        if (! is_array($content)) {
+            return '';
+        }
+
+        $buffer = '';
+
+        foreach ($content as $segment) {
+            if (is_array($segment) && isset($segment['text'])) {
+                $buffer .= $segment['text'];
+            }
+        }
+
+        return $buffer;
+    }
+
+    private function requestMatch(string $query): ?array
+    {
+        $baseUrl = rtrim((string) config('services.matcher.base_url'), '/');
+
+        if ($query === '' || $baseUrl === '') {
+            return null;
+        }
+
+        $response = Http::timeout(config('services.matcher.timeout', 10))
+            ->acceptJson()
+            ->post("{$baseUrl}/match", [
+                'query' => $query,
+                'limit' => 1,
+            ]);
+
+        if (! $response->successful()) {
+            report(new RuntimeException('Food matcher API ?¸ì¶œ ?¤íŒ¨: '.$response->body()));
+
+            return null;
+        }
+
+        $payload = $response->json();
+
+        return $payload['matches'][0] ?? null;
+    }
+}
+

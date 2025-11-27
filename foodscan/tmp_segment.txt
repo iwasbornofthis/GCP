@@ -1,0 +1,25 @@
+                  {mode === "photo" && (
+                    <div className="flex flex-wrap items-center justify-center gap-2 text-[13px]">
+                      <button
+                        type="button"
+                        onClick={handleCapture}
+                        className="rounded-full border border-emerald-800 bg-emerald-800 px-4 py-1 font-semibold text-white shadow transition hover:brightness-110"
+                      >
+                        촬영?�기
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleGallerySelect}
+                        className="rounded-full border border-emerald-800 bg-emerald-800 px-4 py-1 font-semibold text-white shadow transition hover:brightness-110"
+                      >
+                        갤러�?                      </button>
+                      <button
+                        type="button"
+                        onClick={handleLookup}
+                        disabled={!photoFile || loading}
+                        className="rounded-full border border-emerald-800 bg-emerald-800 px-4 py-1 font-semibold text-white shadow transition hover:brightness-110 disabled:opacity-50"
+                      >
+                        {loading ? "분석 �?.." : "분석?�기"}
+                      </button>
+                    </div>
+                  )}

@@ -1,0 +1,668 @@
+import { useEffect, useRef, useState } from "react";
+import jsQR from "jsqr";
+
+const CAMERA_CONSTRAINTS = [
+  { video: { facingMode: "environment", advanced: [{ focusMode: "continuous" }] } },
+  { video: { facingMode: "environment" } },
+  { video: true },
+];
+
+const SCAN_LINE_STYLE = {
+  background: "linear-gradient(90deg, transparent, #01b7a0, transparent)",
+};
+
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\\\\/$/, "") ?? "/api";
+
+const parseMeasurement = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  const raw = String(value).trim();
+
+  if (!raw) {
+    return null;
+  }
+
+  const match = raw.match(/([\\\\d.]+)/);
+  if (!match) {
+    return null;
+  }
+
+  const numeric = Number(match[1]);
+  if (!Number.isFinite(numeric) || numeric <= 0) {
+    return null;
+  }
+
+  const unitPart = raw.replace(match[1], "").trim().toLowerCase() || null;
+
+  return {
+    value: numeric,
+    unit: unitPart,
+    label: raw,
+  };
+};
+
+const NUTRIENT_FIELDS = [
+  { key: "energy_kcal", label: "칼로리", unit: "kcal", digits: 0 },
+  { key: "carbohydrate_g", label: "탄수화물", unit: "g", digits: 1 },
+  { key: "protein_g", label: "단백질", unit: "g", digits: 1 },
+  { key: "fat_g", label: "지방", unit: "g", digits: 1 },
+  { key: "sugars_g", label: "당류", unit: "g", digits: 1 },
+];
+
+function Home({ user, token, onLogout }) {
+  const [mode, setMode] = useState("scan");
+  const [previewSrc, setPreviewSrc] = useState(null);
+  const [photoFile, setPhotoFile] = useState(null);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const animationIdRef = useRef(null);
+  const streamRef = useRef(null);
+  const fileInputRef = useRef(null);
+
+  const stopCamera = () => {
+    if (animationIdRef.current) {
+      cancelAnimationFrame(animationIdRef.current);
+      animationIdRef.current = null;
+    }
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const startCamera = async () => {
+      for (const constraint of CAMERA_CONSTRAINTS) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia(constraint);
+          if (cancelled) {
+            stream.getTracks().forEach((track) => track.stop());
+            return;
+          }
+          streamRef.current = stream;
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            await videoRef.current.play();
+          }
+          return;
+        } catch (error) {
+          console.warn("Camera attempt failed:", error.name);
+        }
+      }
+
+      alert("카메라 접근을 허용해 주세요.");
+    };
+
+    startCamera();
+
+    return () => {
+      cancelled = true;
+      stopCamera();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (mode !== "scan") {
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+        animationIdRef.current = null;
+      }
+      return;
+    }
+
+    const tick = () => {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      if (!video || !canvas) {
+        return;
+      }
+
+      if (video.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
+        const context = canvas.getContext("2d", { willReadFrequently: true });
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        if (code) {
+          alert(`QR code detected!\\\\nData: ${code.data}`);
+          setMode("photo");
+          return;
+        }
+      }
+
+      animationIdRef.current = requestAnimationFrame(tick);
+    };
+
+    animationIdRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+        animationIdRef.current = null;
+      }
+    };
+  }, [mode]);
+
+  useEffect(() => {
+    return () => {
+      if (previewSrc) {
+        URL.revokeObjectURL(previewSrc);
+      }
+    };
+  }, [previewSrc]);
+
+  const resetAnalysis = () => {
+    setResult(null);
+    setError("");
+  };
+
+  const buttonBase =
+    "flex flex-1 flex-col items-center gap-2 rounded-2xl px-[10px] py-4 text-sm font-bold transition-transform duration-200 active:scale-95";
+
+  const formatNutrientValue = (value, digits = 1) => {
+    const num = Number(value);
+    if (!Number.isFinite(num)) {
+      return null;
+    }
+    const fixed = num.toFixed(digits);
+    return digits === 0 ? Number(fixed).toLocaleString() : Number(fixed).toString();
+  };
+
+  const handlePhotoMode = () => {
+    if (previewSrc) {
+      URL.revokeObjectURL(previewSrc);
+      setPreviewSrc(null);
+    }
+    setPhotoFile(null);
+    resetAnalysis();
+    setMode("photo");
+  };
+
+  const handleGallerySelect = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      if (event.target) {
+        event.target.value = "";
+      }
+      return;
+    }
+
+    if (previewSrc) {
+      URL.revokeObjectURL(previewSrc);
+    }
+
+    const nextUrl = URL.createObjectURL(file);
+    setPreviewSrc(nextUrl);
+    setPhotoFile(file);
+    resetAnalysis();
+    if (event.target) {
+      event.target.value = "";
+    }
+  };
+
+  const handleCapture = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) {
+      alert("카메라가 준비되지 않았습니다.");
+      return;
+    }
+
+    canvas.width = video.videoWidth || 1280;
+    canvas.height = video.videoHeight || 720;
+    const context = canvas.getContext("2d");
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          alert("사진을 캡처하지 못했습니다.");
+          return;
+        }
+        if (previewSrc) {
+          URL.revokeObjectURL(previewSrc);
+        }
+        const objectUrl = URL.createObjectURL(blob);
+        setPreviewSrc(objectUrl);
+        setPhotoFile(new File([blob], "capture.jpg", { type: blob.type || "image/jpeg" }));
+        resetAnalysis();
+      },
+      "image/jpeg",
+      0.92,
+    );
+  };
+
+  const handleScanMode = () => {
+    if (previewSrc) {
+      URL.revokeObjectURL(previewSrc);
+      setPreviewSrc(null);
+    }
+    setPhotoFile(null);
+    resetAnalysis();
+    setMode("scan");
+  };
+
+  const analyzePhoto = async () => {
+
+    if (!photoFile) {
+
+      setError("분석할 이미지를 선택해주세요.");
+
+      return;
+
+    }
+
+
+
+    const formData = new FormData();
+
+    formData.append("photo", photoFile, photoFile.name || "upload.jpg");
+
+
+
+    setLoading(true);
+
+    setError("");
+
+    setResult(null);
+
+
+
+    try {
+
+      const response = await fetch(`${API_BASE}/foods/analyze`, {
+
+        method: "POST",
+
+        body: formData,
+
+        headers: {
+
+          Accept: "application/json",
+
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+
+        },
+
+      });
+
+
+
+      const text = await response.text();
+
+      const payload = text ? JSON.parse(text) : null;
+
+
+
+      if (!response.ok) {
+
+        throw new Error(
+
+          payload?.message || "OpenAI 분석을 호출하는 중 문제가 발생했습니다."
+
+        );
+
+      }
+
+
+
+      setResult(payload);
+
+    } catch (err) {
+
+      setError(err.message || "분석 요청 중 오류가 발생했습니다.");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
+
+
+
+
+
+  const renderResult = () => {
+
+    if (!result) {
+
+      return null;
+
+    }
+
+
+
+    const hasConfidence =
+      typeof result.confidence === "number" && !Number.isNaN(result.confidence);
+
+    const nutrients = result.nutrients ?? {};
+
+    const servingInfo = parseMeasurement(result.matchedFood?.serving_size ?? null);
+    const portionInfo = parseMeasurement(result.matchedFood?.product_weight ?? null);
+
+    let scalingFactor = 1;
+    if (servingInfo && portionInfo) {
+      if (!servingInfo.unit || !portionInfo.unit || servingInfo.unit === portionInfo.unit) {
+        scalingFactor = portionInfo.value / servingInfo.value;
+      }
+    }
+
+    const servingLabel = servingInfo?.label ?? null;
+    const portionLabel = portionInfo?.label ?? null;
+
+    const nutrientItems = NUTRIENT_FIELDS.map((field) => {
+      const baseValue = nutrients[field.key];
+      if (baseValue === null || baseValue === undefined) {
+        return null;
+      }
+      const scaledValue = Number(baseValue) * scalingFactor;
+      const formatted = formatNutrientValue(scaledValue, field.digits ?? 1);
+      if (formatted === null) {
+        return null;
+      }
+      return { ...field, value: formatted };
+    }).filter(Boolean);
+
+    const glucoseRisk = result.glucoseRisk ?? null;
+    const riskLevel = glucoseRisk?.level ?? null;
+    const riskScore = typeof glucoseRisk?.score === "number" ? glucoseRisk.score.toFixed(1) : null;
+    const netCarbsDisplay =
+      typeof glucoseRisk?.net_carbs === "number" ? glucoseRisk.net_carbs.toFixed(1) : null;
+    const riskMessage = glucoseRisk?.message ?? null;
+
+    const riskPillStyles = {
+      // #01b7a0 계열의 밝은 톤으로 변경하여 일관성 확보
+      low: "bg-[#01b7a0]/20 text-[#013d37] border-[#01b7a0]/60", 
+      medium: "bg-[#f0ad4e]/20 text-[#8a5a11] border-[#f0ad4e]/60",
+      high: "bg-[#ff6f61]/20 text-[#8b1e13] border-[#ff6f61]/60",
+    };
+    const riskLabel = {
+      low: "낮음",
+      medium: "보통",
+      high: "높음",
+    };
+
+
+
+    return (
+      // #034d45 -> 더 어두운 #013d37로 변경하여 가독성 강화
+      <div className="mt-3 text-xs text-[#013d37]"> 
+        <div className="rounded-xl bg-white p-4 shadow-lg">
+          <p className="text-base font-semibold text-[#013d37]">
+            {result.foodName || "음식명을 찾을 수 없어요"}
+          </p>
+          {hasConfidence && (
+            // #027c6d -> #01b7a0보다 조금 더 진한 톤으로 유지하여 강조
+            <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-[#027c6d]"> 
+              신뢰도 {(result.confidence * 100).toFixed(1)}%
+            </p>
+          )}
+          {result.notes && (
+            // #034d45/80 -> 본문 텍스트는 #013d37/80으로 일관성 유지
+            <p className="mt-2 text-sm leading-relaxed text-[#013d37]/80">{result.notes}</p> 
+          )}
+        </div>
+
+        {glucoseRisk && (
+          // text-[#034d45] -> #013d37로 변경
+          <div className="mt-3 rounded-xl bg-white p-4 text-[#013d37] shadow"> 
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#027c6d]">
+              혈당 위험도
+            </p>
+            <div className="mt-3 flex flex-col gap-2 text-sm">
+              <div
+                className={`inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-sm font-semibold ${
+                  // riskPillStyles[riskLevel]에 low가 일관된 #013d37 텍스트를 사용하도록 수정
+                  riskPillStyles[riskLevel] ?? "border-[#01b7a0]/40 bg-[#01b7a0]/15 text-[#013d37]" 
+                }`}
+              >
+                {riskLabel[riskLevel] ?? "평가 중"}
+                <span className="text-xs text-[#013d37]/70">({riskScore})</span>
+              </div>
+              {riskMessage && <p className="text-[#013d37]/80">{riskMessage}</p>}
+            </div>
+          </div>
+        )}
+
+        {nutrientItems.length > 0 ? (
+          <div className="mt-3 rounded-xl bg-white p-4 shadow">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#027c6d]">
+              영양 정보
+            </p>
+            {(portionLabel || servingLabel) && (
+              // text-[#034d45]/60 -> #013d37/60으로 일관성 유지
+              <p className="mt-1 text-[11px] text-[#013d37]/60"> 
+                {portionLabel
+                  ? `섭취량 기준 (${portionLabel}${servingLabel ? ` · 기준량 ${servingLabel}` : ""})`
+                  : servingLabel
+                  ? `기준량 ${servingLabel}`
+                  : null}
+              </p>
+            )}
+            <div className="mt-3 grid grid-cols-2 gap-3 text-[#013d37]">
+              {nutrientItems.map((item) => (
+                <div
+                  key={item.key}
+                  // 영양정보 카드에 더 부드러운 배경색 사용
+                  className="rounded-lg border border-[#01b7a0]/20 bg-[#f0f8f7] px-3 py-2 text-left shadow-sm" 
+                >
+                  <p className="text-[11px] uppercase tracking-[0.15em] text-[#027c6d]">
+                    {item.label}
+                  </p>
+                  <p className="text-lg font-semibold text-[#013d37]">
+                    {item.value}
+                    <span className="ml-1 text-sm font-medium text-[#013d37]/70">{item.unit}</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p className="mt-3 rounded-xl bg-white/70 p-4 text-[11px] text-[#013d37] shadow">
+            영양 정보를 불러오지 못했습니다.
+          </p>
+        )}
+
+      </div>
+
+    );
+
+  };
+  return (
+    <>
+      <canvas ref={canvasRef} className="hidden" />
+      <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-[#f0f8f7] to-white text-[#013d37]">
+        <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-transparent text-[#013d37]">
+          <header className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-5 pt-[50px] pb-5 text-[#013d37]">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#027c6d]">
+                FoodScan
+              </p>
+              <h1 className="m-0 text-[20px] font-bold text-[#013d37] drop-shadow">
+                {user?.name ? `${user.name}님, 다시 만나서 반가워요.` : "식사 기록을 시작해 볼까요?"}
+              </h1>
+            </div>
+            {onLogout && (
+              <button
+                type="button"
+                // 테두리도 #027c6d 대신 #01b7a0를 사용하여 통일감 부여
+                onClick={onLogout}
+                className="rounded-full border border-[#01b7a0]/70 px-3 py-1 text-xs font-semibold text-[#027c6d]"
+              >
+                로그아웃
+              </button>
+            )}
+          </header>
+
+          <main className="relative flex h-full flex-1 flex-col items-center justify-center overflow-hidden text-center">
+            <video
+              ref={videoRef}
+              playsInline
+              autoPlay
+              muted
+              className={`absolute inset-0 z-[1] h-full w-full object-cover ${previewSrc ? "opacity-0" : "opacity-100"}`}
+            />
+            {previewSrc && (
+              <img
+                src={previewSrc}
+                alt="선택한 음식 사진"
+                className="absolute inset-0 z-[1] h-full w-full object-cover"
+              />
+            )}
+            <div
+              className={`absolute left-1/2 top-1/2 z-[2] h-[250px] w-[250px] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
+                mode === "scan" ? "opacity-100" : "opacity-50"
+              }`}
+            >
+              <div className="absolute left-0 top-0 h-[40px] w-[40px] border-[5px] border-[#01b7a0] border-r-0 border-b-0" />
+              <div className="absolute right-0 top-0 h-[40px] w-[40px] border-[5px] border-[#01b7a0] border-l-0 border-b-0" />
+              <div className="absolute bottom-0 left-0 h-[40px] w-[40px] border-[5px] border-[#01b7a0] border-r-0 border-t-0" />
+              <div className="absolute bottom-0 right-0 h-[40px] w-[40px] border-[5px] border-[#01b7a0] border-l-0 border-t-0" />
+              {mode === "scan" && (
+                <div
+                  className="absolute left-0 right-0 h-1 rounded shadow-[0_0_12px_1px_rgba(1,183,160,0.6)] animate-scan"
+                  style={SCAN_LINE_STYLE}
+                />
+              )}
+            </div>
+          </main>
+
+          <section className="absolute inset-x-0 bottom-[165px] z-10 px-7">
+            <div className="mx-auto w-full max-w-[360px] rounded-xl bg-[#01b7a0] px-4 py-3 text-white shadow-2xl backdrop-blur">
+              <p className="text-sm leading-relaxed text-center">
+                {mode === "scan"
+                  ? "QR/바코드를 프레임 중앙에 맞춰 주세요."
+                  : "프레임에 맞춰 촬영하거나 아래 버튼으로 갤러리를 열 수 있어요."}
+              </p>
+
+              {mode === "photo" && (
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs">
+                  <button
+                    type="button"
+                    onClick={handleCapture}
+                    // #027c6d -> #01b7a0의 더 진한 톤으로 변경하여 대비 강화
+                    className="rounded-full border border-[#027c6d] px-3 py-1 text-[#027c6d]" 
+                  >
+                    촬영하기
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleGallerySelect}
+                    // #027c6d -> #01b7a0의 더 진한 톤으로 변경하여 대비 강화
+                    className="rounded-full border border-[#027c6d] px-3 py-1 text-[#027c6d]"
+                  >
+                    갤러리에서 선택
+                  </button>
+                  <button
+                    type="button"
+                    onClick={analyzePhoto}
+                    disabled={!photoFile || loading}
+                    // #01b7a0 유지 (Primary Color)
+                    className="rounded-full border border-[#01b7a0] bg-[#01b7a0] px-3 py-1 font-semibold text-white disabled:opacity-50"
+                  >
+                    {loading ? "분석 중..." : "분석하기"}
+                  </button>
+                </div>
+              )}
+
+              {error && <p className="mt-2 text-center text-xs text-rose-500">{error}</p>}
+
+              {renderResult()}
+            </div>
+          </section>
+
+          <footer className="absolute inset-x-0 bottom-0 z-10 px-7 pb-7 pt-4">
+            <div className="mx-auto flex w-full max-w-[360px] justify-center gap-4">
+              <button
+                type="button"
+                onClick={handlePhotoMode}
+                className={
+                  mode === "photo"
+                    ? `${buttonBase} bg-[#01b7a0] text-white shadow-lg` // #01b7a0 유지
+                    : `${buttonBase} bg-white text-[#027c6d] shadow` // #027c6d 유지 (비활성 텍스트)
+                }
+              >
+                <svg
+                  className="h-8 w-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <span>음식 사진</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleScanMode}
+                className={
+                  mode === "scan"
+                    ? `${buttonBase} bg-[#01b7a0] text-white shadow-lg` // #01b7a0 유지
+                    : `${buttonBase} bg-white text-[#027c6d] shadow` // #027c6d 유지 (비활성 텍스트)
+                }
+              >
+                <svg
+                  className="h-8 w-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5"
+                  />
+                </svg>
+                <span>QR 스캔</span>
+              </button>
+            </div>
+          </footer>
+        </div>
+      </div>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+    </>
+  );
+}
+
+export default Home;
+

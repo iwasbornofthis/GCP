@@ -1,0 +1,1 @@
+<?php\r\nrequire __DIR__.'/vendor/autoload.php';\r\n = require __DIR__.'/bootstrap/app.php';\r\n = ->make('Illuminate\\Contracts\\Console\\Kernel');\r\n->bootstrap();\r\n = App\\Models\\User::firstOrCreate(['email' => 'test@example.com'], ['name' => 'Test User', 'password' => bcrypt('password')]);\r\necho ->createToken('api-token')->plainTextToken;\r\n

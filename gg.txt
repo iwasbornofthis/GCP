@@ -1,0 +1,63 @@
+﻿erDiagram
+    USERS ||--o{ FOOD_SCANS : scans
+    FOOD_SCANS }o--|| FOODS : matches
+    FOODS ||--|| FOOD_EMBEDDINGS : has
+
+    USERS {
+        bigint id PK
+        string name
+        string email
+        timestamp email_verified_at
+        string password
+        string remember_token
+        integer age
+        enum gender
+        decimal height_cm
+        decimal weight_kg
+        decimal hba1c
+        timestamps
+    }
+
+    FOOD_SCANS {
+        bigint id PK
+        bigint user_id FK
+        string image_path
+        json result
+        json nutrients
+        float predicted_glucose
+        timestamps
+    }
+
+    FOODS {
+        bigint id PK
+        string food_code
+        string food_name
+        string common_name
+        string serving_size
+        decimal energy_kcal
+        decimal moisture_g
+        decimal protein_g
+        decimal fat_g
+        decimal carbohydrate_g
+        decimal sugars_g
+        decimal dietary_fiber_g
+        decimal sodium_mg
+        decimal beta_carotene_mcg
+        decimal cholesterol_mg
+        decimal saturated_fatty_acids_g
+        decimal trans_fatty_acids_g
+        decimal fructose_g
+        decimal lactose_g
+        decimal sucrose_g
+        decimal glucose_g
+        string product_weight
+        timestamps
+    }
+
+    FOOD_EMBEDDINGS {
+        bigint id PK
+        bigint food_id FK
+        smallint dimension
+        longtext embedding
+        timestamps
+    }
