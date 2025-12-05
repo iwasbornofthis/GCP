@@ -194,8 +194,8 @@ function AuthPanel({ onAuthChange, isFullScreen = false }) {
   }, [currentMode]);
 
   const containerClass = isFullScreen
-    ? "w-full rounded-[32px] bg-white p-6 shadow-2xl"
-    : "w-full max-w-md rounded-[32px] border border-[#d1d5db] bg-white px-8 py-9 shadow-lg";
+    ? "w-full rounded-[32px] bg-white card-surface p-6 shadow-2xl"
+    : "w-full max-w-md rounded-[32px] border border-[#d1d5db] bg-white card-surface px-8 py-9 shadow-lg";
 
   return (
     <div className={`${containerClass} transition`}>

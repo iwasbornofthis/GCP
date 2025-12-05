@@ -1,0 +1,4 @@
+node_modules
+food_matcher/.venv
+snapshot-*.tar.gz
+foodscan-http.log

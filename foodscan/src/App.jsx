@@ -3,14 +3,22 @@ import AuthPanel from "./AuthPanel";
 import Home from "./Home";
 
 const STORAGE_KEY = "foodscan-auth";
+const THEME_KEY = "foodscan-theme";
 
 function App() {
   const [auth, setAuth] = useState(null);
+  const [theme, setTheme] = useState("default"); // default | red
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       setAuth(JSON.parse(stored));
+    }
+
+    const storedTheme = localStorage.getItem(THEME_KEY);
+    if (storedTheme === "red") {
+      setTheme("red");
+      document.body.classList.add("red-theme");
     }
   }, []);
 
@@ -23,11 +31,30 @@ function App() {
     }
   };
 
+  const toggleTheme = () => {
+    const next = theme === "red" ? "default" : "red";
+    setTheme(next);
+    localStorage.setItem(THEME_KEY, next);
+    if (next === "red") {
+      document.body.classList.add("red-theme");
+    } else {
+      document.body.classList.remove("red-theme");
+    }
+  };
+
+  const isRed = theme === "red";
+
   const isAuthenticated = Boolean(auth?.token);
 
   if (isAuthenticated) {
     return (
-      <Home user={auth.user} token={auth.token} onLogout={() => handleAuthChange(null)} />
+      <Home
+        user={auth.user}
+        token={auth.token}
+        onLogout={() => handleAuthChange(null)}
+        toggleTheme={toggleTheme}
+        isRed={isRed}
+      />
     );
   }
 

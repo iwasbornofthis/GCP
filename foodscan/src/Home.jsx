@@ -97,7 +97,7 @@ const scaleNutrients = (nutrients, factor) => {
   return scaled;
 };
 
-function Home({ user, token, onLogout }) {
+function Home({ user, token, onLogout, toggleTheme, isRed }) {
   const [mode, setMode] = useState("scan"); // scan | photo
   const [previewSrc, setPreviewSrc] = useState(null);
   const [photoFile, setPhotoFile] = useState(null);
@@ -474,11 +474,17 @@ function Home({ user, token, onLogout }) {
       typeof glucoseRisk?.score === "number" ? glucoseRisk.score.toFixed(1) : null;
     const riskMessage = glucoseRisk?.message ?? null;
 
-    const riskPillStyles = {
-      low: "bg-emerald-200 text-emerald-950 border-emerald-500",
-      medium: "bg-amber-200 text-amber-950 border-amber-500",
-      high: "bg-rose-400 text-white border-rose-600",
-    };
+    const riskPillStyles = isRed
+      ? {
+          low: "bg-[#7a1a1a] text-white border-red-200",
+          medium: "bg-[#a10000] text-white border-red-200",
+          high: "bg-[#c40000] text-white border-red-100",
+        }
+      : {
+          low: "bg-emerald-200 text-emerald-950 border-emerald-500",
+          medium: "bg-amber-200 text-amber-950 border-amber-500",
+          high: "bg-rose-400 text-white border-rose-600",
+        };
     const riskLabel = {
       low: "낮음",
       medium: "보통",
@@ -489,26 +495,63 @@ function Home({ user, token, onLogout }) {
       (glucoseRisk ? "bg-rose-400 text-white border-rose-600" : "border-emerald-300 bg-emerald-100 text-emerald-950");
 
     return (
-      <div className="mt-3 text-[13px] text-emerald-950">
-        <div className="rounded-xl bg-white p-4 shadow-lg">
-          <p className="text-[15px] font-semibold text-emerald-950">
+      <div className="mt-3 text-[13px]">
+        <div
+          className={`rounded-xl p-4 shadow-lg ${
+            isRed ? "bg-[#1a0000] text-red-50 border border-red-500/40" : "bg-white text-emerald-950"
+          }`}
+        >
+          <p className={`text-[15px] font-semibold ${isRed ? "text-red-50" : "text-emerald-950"}`}>
             {result.foodName || "음식명을 찾을 수 없습니다"}
           </p>
           {hasConfidence && (
-            <p className="mt-1 text-[12px] uppercase tracking-[0.3em] text-emerald-700">
+            <p
+              className={`mt-1 text-[12px] uppercase tracking-[0.3em] ${
+                isRed ? "text-red-200" : "text-emerald-700"
+              }`}
+            >
               신뢰도 {(result.confidence * 100).toFixed(1)}%
             </p>
           )}
+          {previewSrc && (
+            <div
+              className={`mt-3 mx-auto w-full max-w-[280px] overflow-hidden rounded-2xl border ${
+                isRed ? "border-red-500/50" : "border-emerald-200/70"
+              }`}
+            >
+              <div className="relative h-48 w-full">
+                <img
+                  src={previewSrc}
+                  alt="분석에 사용된 사진"
+                  className={`absolute inset-0 h-full w-full object-cover ${
+                    isRed ? "photo-blue-filter" : ""
+                  }`}
+                />
+              </div>
+            </div>
+          )}
           {result.notes && (
-            <p className="mt-2 text-[14px] leading-relaxed text-emerald-950/80">
+            <p
+              className={`mt-2 text-[14px] leading-relaxed ${
+                isRed ? "text-red-100/80" : "text-emerald-950/80"
+              }`}
+            >
               {result.notes}
             </p>
           )}
         </div>
 
         {glucoseRisk && (
-          <div className="mt-3 rounded-xl bg-white p-4 text-emerald-950 shadow">
-            <p className="text-[15px] font-semibold uppercase tracking-normal text-emerald-950">
+          <div
+            className={`mt-3 rounded-xl p-4 shadow ${
+              isRed ? "bg-[#1a0000] text-red-50 border border-red-500/40" : "bg-white text-emerald-950"
+            }`}
+          >
+            <p
+              className={`text-[15px] font-semibold uppercase tracking-normal ${
+                isRed ? "text-red-50" : "text-emerald-950"
+              }`}
+            >
               혈당 위험도
             </p>
             <div className="mt-3 flex flex-col gap-2 text-[14px]">
@@ -518,28 +561,48 @@ function Home({ user, token, onLogout }) {
                 {riskLabel[riskLevel] ?? "평가 중"}
                 <span className="text-[12px] text-emerald-950/70">({riskScore})</span>
               </div>
-              {riskMessage && <p className="text-emerald-950/80">{riskMessage}</p>}
+              {riskMessage && (
+                <p className={isRed ? "text-red-100/80" : "text-emerald-950/80"}>{riskMessage}</p>
+              )}
             </div>
           </div>
         )}
 
         {nutrientItems.length > 0 ? (
-          <div className="mt-3 rounded-xl bg-white p-4 shadow">
-            <p className="text-[15px] font-semibold uppercase tracking-normal text-emerald-950">
+          <div
+            className={`mt-3 rounded-xl p-4 shadow ${
+              isRed ? "bg-[#1a0000] text-red-50 border border-red-500/40" : "bg-white text-emerald-950"
+            }`}
+          >
+            <p
+              className={`text-[15px] font-semibold uppercase tracking-normal ${
+                isRed ? "text-red-50" : "text-emerald-950"
+              }`}
+            >
               영양 정보
             </p>
-            <div className="mt-3 grid grid-cols-2 gap-3 text-emerald-950">
+            <div className={`mt-3 grid grid-cols-2 gap-3 ${isRed ? "text-red-50" : "text-emerald-950"}`}>
               {nutrientItems.map((item) => (
                 <div
                   key={item.key}
-                  className="rounded-lg border border-emerald-200 bg-emerald-100 px-3 py-2 text-left shadow-sm"
+                  className={`rounded-lg px-3 py-2 text-left shadow-sm ${
+                    isRed ? "border border-red-500/40 bg-[#2a0000]" : "border border-emerald-200 bg-emerald-100"
+                  }`}
                 >
-                  <p className="text-[12px] uppercase tracking-[0.15em] text-emerald-700">
+                  <p
+                    className={`text-[12px] uppercase tracking-[0.15em] ${
+                      isRed ? "text-red-200" : "text-emerald-700"
+                    }`}
+                  >
                     {item.label}
                   </p>
-                  <p className="text-[20px] font-semibold text-emerald-950">
+                  <p className={`text-[20px] font-semibold ${isRed ? "text-red-50" : "text-emerald-950"}`}>
                     {item.value}
-                    <span className="ml-1 text-[13px] font-medium text-emerald-950/70">
+                    <span
+                      className={`ml-1 text-[13px] font-medium ${
+                        isRed ? "text-red-100/80" : "text-emerald-950/70"
+                      }`}
+                    >
                       {item.unit}
                     </span>
                   </p>
@@ -548,7 +611,11 @@ function Home({ user, token, onLogout }) {
             </div>
           </div>
         ) : (
-          <p className="mt-3 rounded-xl bg-white/70 p-4 text-[12px] text-emerald-950 shadow">
+          <p
+            className={`mt-3 rounded-xl p-4 text-[12px] shadow ${
+              isRed ? "bg-[#1a0000]/80 text-red-100 border border-red-500/30" : "bg-white/70 text-emerald-950"
+            }`}
+          >
             영양 정보를 불러오지 못했습니다.
           </p>
         )}
@@ -556,31 +623,83 @@ function Home({ user, token, onLogout }) {
     );
   };
 
+  const theme = isRed
+    ? {
+        background: "bg-gradient-to-b from-[#1a0000] via-[#0c0000] to-[#2a0000] text-red-50",
+        shell:
+          "md:border md:border-red-500/40 md:bg-[#130000]/80 text-red-50 md:shadow-[0_35px_120px_rgba(255,0,0,0.25)]",
+        headerCard:
+          "border border-red-500/40 bg-[#1a0000]/95 text-red-50 shadow-[0_15px_45px_rgba(255,0,0,0.2)]",
+        title: "text-red-50",
+        subtitle: "text-red-200",
+        hintCard: "bg-[#1a0000]/90 text-red-50",
+        hintText: "text-red-100",
+        primaryBtn: "bg-red-700 text-white border-red-700",
+        secondaryBtn: "bg-[#2a0000] text-red-100 border-red-500/60",
+      }
+    : {
+        background:
+          "bg-gradient-to-b from-emerald-200 via-emerald-100 to-emerald-50 text-emerald-950",
+        shell:
+          "md:border md:border-emerald-200 md:bg-white/70 text-emerald-950 md:shadow-[0_35px_120px_rgba(4,118,110,0.25)]",
+        headerCard:
+          "border border-emerald-200 bg-white/95 text-emerald-950 shadow",
+        title: "text-emerald-950",
+        subtitle: "text-emerald-700",
+        hintCard: "bg-white text-emerald-950",
+        hintText: "text-emerald-950",
+        primaryBtn: "bg-emerald-800 text-white border-emerald-800",
+        secondaryBtn: "bg-white text-emerald-800 border-emerald-200",
+      };
 
   return (
     <>
       <canvas ref={canvasRef} className="hidden" />
-      <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-emerald-200 via-emerald-100 to-emerald-50 text-emerald-950 md:flex md:justify-center md:overflow-visible md:px-6 md:py-10">
-        <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-transparent text-emerald-950 md:mx-auto md:grid md:min-h-[720px] md:max-w-6xl md:grid-cols-[minmax(0,1fr)_360px] md:items-start md:gap-8 md:overflow-visible md:rounded-[40px] md:border md:border-emerald-200 md:bg-white/70 md:px-10 md:py-10 md:shadow-[0_35px_120px_rgba(4,118,110,0.25)] backdrop-blur-sm">
+      <div
+        className={`relative min-h-screen w-full overflow-hidden ${theme.background} md:flex md:justify-center md:overflow-visible md:px-6 md:py-10`}
+      >
+        <div
+          className={`relative flex min-h-screen w-full flex-col overflow-hidden bg-transparent md:mx-auto md:grid md:min-h-[720px] md:max-w-6xl md:grid-cols-[minmax(0,1fr)_360px] md:items-start md:gap-8 md:overflow-visible md:rounded-[40px] md:px-10 md:py-10 backdrop-blur-sm ${theme.shell}`}
+        >
           <div
             className={`relative z-20${view === "capture" ? " pb-[220px]" : ""} md:col-start-2 md:row-start-1 md:row-span-4 md:flex md:h-full md:flex-col md:items-center md:gap-6 md:self-stretch md:pb-0`}
           >
             <header className="relative z-40 w-full px-7 pt-[50px] pb-5 md:static md:flex-none md:px-0 md:pt-0 md:pb-0">
-              <div className="relative mx-auto flex w-full max-w-[360px] items-center justify-between rounded-2xl border border-emerald-200 bg-white/95 px-5 py-4 text-emerald-950 shadow md:mx-0">
+              <div
+                className={`relative mx-auto flex w-full max-w-[360px] items-center justify-between rounded-2xl px-5 py-4 md:mx-0 ${theme.headerCard}`}
+              >
                 <div>
-                  <p className="text-[12px] font-semibold uppercase tracking-[0.3em] text-emerald-700">
+                  <p
+                    className={`text-[12px] font-semibold uppercase tracking-[0.3em] ${theme.subtitle}`}
+                  >
                     FoodScan
                   </p>
-                  <h1 className="m-0 text-[22px] font-bold text-emerald-950">
+                  <h1 className={`m-0 text-[22px] font-bold ${theme.title}`}>
                     {user?.name ? `${user.name}` : "스캔으로 식사를 기록해 보세요"}
                   </h1>
                 </div>
-                <div className="relative">
+                <div className="relative flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={toggleTheme}
+                    className={`h-10 rounded-full px-3 text-xs font-bold uppercase tracking-[0.08em] text-white shadow transition ${
+                      isRed
+                        ? "bg-gradient-to-r from-[#ff1a1a] to-[#b30000] hover:brightness-110"
+                        : "bg-gradient-to-r from-emerald-500 to-emerald-700 hover:brightness-110"
+                    }`}
+                    aria-pressed={Boolean(isRed)}
+                  >
+                    {isRed ? "Red Off" : "Red Mode"}
+                  </button>
                   <button
                     type="button"
                     ref={menuButtonRef}
                     onClick={() => setMenuOpen((prev) => !prev)}
-                    className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50 text-emerald-900 shadow hover:border-emerald-400"
+                    className={`flex h-10 w-10 items-center justify-center rounded-xl border shadow ${
+                      isRed
+                        ? "border-red-500/40 bg-[#2a0000] text-red-100 hover:border-red-300"
+                        : "border-emerald-200 bg-emerald-50 text-emerald-900 hover:border-emerald-400"
+                    }`}
                     aria-label="메뉴 열기"
                   >
                     <svg
@@ -596,7 +715,11 @@ function Home({ user, token, onLogout }) {
                   {menuOpen && (
                     <div
                       ref={menuRef}
-                      className="absolute right-0 top-12 z-50 w-48 rounded-2xl border border-emerald-200 bg-white p-2 text-sm text-emerald-900 shadow-xl"
+                      className={`absolute right-0 top-12 z-50 w-48 rounded-2xl border p-2 text-sm shadow-xl ${
+                        isRed
+                          ? "border-red-500/40 bg-[#1a0000] text-red-50"
+                          : "border-emerald-200 bg-white text-emerald-900"
+                      }`}
                     >
                       <button
                         type="button"
@@ -604,10 +727,14 @@ function Home({ user, token, onLogout }) {
                           setView("capture");
                           setMenuOpen(false);
                         }}
-                        className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left hover:bg-emerald-50"
+                        className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left ${
+                          isRed ? "hover:bg-[#2a0000]" : "hover:bg-emerald-50"
+                        }`}
                       >
                         <span>스캔 / 사진</span>
-                        <span className="text-[11px] text-emerald-700">캡처</span>
+                        <span className={`text-[11px] ${isRed ? "text-red-200" : "text-emerald-700"}`}>
+                          캡처
+                        </span>
                       </button>
                       <button
                         type="button"
@@ -615,10 +742,14 @@ function Home({ user, token, onLogout }) {
                           setView("history");
                           setMenuOpen(false);
                         }}
-                        className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left hover:bg-emerald-50"
+                        className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left ${
+                          isRed ? "hover:bg-[#2a0000]" : "hover:bg-emerald-50"
+                        }`}
                       >
                         <span>나의 식단 기록</span>
-                        <span className="text-[11px] text-emerald-700">요약</span>
+                        <span className={`text-[11px] ${isRed ? "text-red-200" : "text-emerald-700"}`}>
+                          요약
+                        </span>
                       </button>
                       <button
                         type="button"
@@ -626,10 +757,14 @@ function Home({ user, token, onLogout }) {
                           setMenuOpen(false);
                           // 나의 정보는 추후 상세화면 연결 예정
                         }}
-                        className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left hover:bg-emerald-50"
+                        className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-left ${
+                          isRed ? "hover:bg-[#2a0000]" : "hover:bg-emerald-50"
+                        }`}
                       >
                         <span>나의 정보</span>
-                        <span className="text-[11px] text-emerald-700">프로필</span>
+                        <span className={`text-[11px] ${isRed ? "text-red-200" : "text-emerald-700"}`}>
+                          프로필
+                        </span>
                       </button>
                       {onLogout && (
                         <button
@@ -638,7 +773,11 @@ function Home({ user, token, onLogout }) {
                             setMenuOpen(false);
                             onLogout();
                           }}
-                          className="mt-1 flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-rose-600 hover:bg-rose-50"
+                          className={`mt-1 flex w-full items-center justify-between rounded-xl px-3 py-2 text-left ${
+                            isRed
+                              ? "text-red-200 hover:bg-[#2a0000]"
+                              : "text-rose-600 hover:bg-rose-50"
+                          }`}
                         >
                           <span>로그아웃</span>
                         </button>
@@ -657,29 +796,49 @@ function Home({ user, token, onLogout }) {
                   <div className="mx-auto w-full max-w-[360px] space-y-3 md:mx-0">
                     {renderResult()}
                     {token && (
-                      <div className="flex flex-col gap-2 rounded-2xl bg-white px-4 py-3 text-sm text-emerald-900 shadow-lg">
+                      <div
+                        className={`flex flex-col gap-2 rounded-2xl px-4 py-3 text-sm shadow-lg ${
+                          isRed
+                            ? "bg-[#1a0000] text-red-50 border border-red-500/40"
+                            : "bg-white text-emerald-900"
+                        }`}
+                      >
                         <div className="flex flex-wrap items-center justify-between gap-2">
-                          <p className="m-0 font-semibold text-emerald-950">저장 및 요약</p>
+                          <p
+                            className={`m-0 font-semibold ${
+                              isRed ? "text-red-50" : "text-emerald-950"
+                            }`}
+                          >
+                            저장 및 요약
+                          </p>
                           <div className="flex flex-wrap gap-2">
                             <button
                               type="button"
                               onClick={saveResult}
                               disabled={saving}
-                              className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-semibold text-white shadow transition hover:brightness-110 disabled:opacity-60"
+                              className={`rounded-full px-3 py-1 text-xs font-semibold text-white shadow transition hover:brightness-110 disabled:opacity-60 ${
+                                isRed ? "bg-red-700" : "bg-emerald-600"
+                              }`}
                             >
                               {saving ? "저장 중..." : "오늘 기록에 저장"}
                             </button>
                             <button
                               type="button"
                               onClick={() => setView("history")}
-                              className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-xs font-semibold text-emerald-800 shadow-sm transition hover:border-emerald-400"
+                              className={`rounded-full border px-3 py-1 text-xs font-semibold shadow-sm transition ${
+                                isRed
+                                  ? "border-red-500/50 bg-[#2a0000] text-red-100 hover:border-red-300"
+                                  : "border-emerald-200 bg-white text-emerald-800 hover:border-emerald-400"
+                              }`}
                             >
                               나의 식단 기록 보기
                             </button>
                           </div>
                         </div>
                         {saveMessage && (
-                          <p className="m-0 text-xs text-emerald-700">{saveMessage}</p>
+                          <p className={`m-0 text-xs ${isRed ? "text-red-200" : "text-emerald-700"}`}>
+                            {saveMessage}
+                          </p>
                         )}
                       </div>
                     )}
@@ -691,9 +850,11 @@ function Home({ user, token, onLogout }) {
               <footer className="fixed inset-x-0 bottom-0 z-30 px-7 pb-7 pt-4 md:order-4 md:static md:w-full md:px-0 md:pb-0 md:pt-0">
                 <div className="mx-auto w-full max-w-[360px] space-y-3 md:mx-0">
                   {!result && (
-                    <div className="rounded-xl bg-white px-4 py-3 text-emerald-950 shadow-2xl">
+                    <div className={`rounded-xl px-4 py-3 shadow-2xl ${theme.hintCard}`}>
                       <p className="text-[15px] leading-relaxed text-center">
-                        {mode === "scan" ? "QR을 프레임 중앙에 맞춰 주세요." : "촬영하거나 갤러리에서 선택해 주세요."}
+                        {mode === "scan"
+                          ? "QR을 프레임 중앙에 맞춰 주세요."
+                          : "촬영하거나 갤러리에서 선택해 주세요."}
                       </p>
 
                       {mode === "photo" && (
@@ -701,14 +862,14 @@ function Home({ user, token, onLogout }) {
                           <button
                             type="button"
                             onClick={handleCapture}
-                            className="rounded-full border border-emerald-800 bg-emerald-800 px-4 py-1 font-semibold text-white shadow transition hover:brightness-110"
+                            className={`rounded-full px-4 py-1 font-semibold shadow transition hover:brightness-110 ${theme.primaryBtn}`}
                           >
                             촬영하기
                           </button>
                           <button
                             type="button"
                             onClick={handleGallerySelect}
-                            className="rounded-full border border-emerald-800 bg-emerald-800 px-4 py-1 font-semibold text-white shadow transition hover:brightness-110"
+                            className={`rounded-full px-4 py-1 font-semibold shadow transition hover:brightness-110 ${theme.primaryBtn}`}
                           >
                             갤러리
                           </button>
@@ -716,14 +877,18 @@ function Home({ user, token, onLogout }) {
                             type="button"
                             onClick={analyzePhoto}
                             disabled={!photoFile || loading}
-                            className="rounded-full border border-emerald-800 bg-emerald-800 px-4 py-1 font-semibold text-white shadow transition hover:brightness-110 disabled:opacity-50"
+                            className={`rounded-full px-4 py-1 font-semibold shadow transition hover:brightness-110 disabled:opacity-50 ${theme.primaryBtn}`}
                           >
                             {loading ? "분석 중..." : "분석하기"}
                           </button>
                         </div>
                       )}
 
-                      {error && <p className="mt-2 text-center text-[13px] text-rose-500">{error}</p>}
+                      {error && (
+                        <p className={`mt-2 text-center text-[13px] ${isRed ? "text-red-200" : "text-rose-500"}`}>
+                          {error}
+                        </p>
+                      )}
                     </div>
                   )}
                   <div className="flex w-full justify-center gap-4">
@@ -792,7 +957,7 @@ function Home({ user, token, onLogout }) {
             ) : (
               <section className="relative z-10 px-7 md:static md:w-full md:px-0 md:py-4">
                 <div className="mx-auto w-full max-w-[360px] md:mx-0">
-                  <MealSummary token={token} apiBase={API_BASE} />
+                  <MealSummary token={token} apiBase={API_BASE} isRed={isRed} />
                 </div>
               </section>
             )}
@@ -801,14 +966,25 @@ function Home({ user, token, onLogout }) {
 
           {view === "capture" && (
             <main className="absolute inset-0 z-0 flex h-full w-full flex-col items-center justify-center overflow-hidden text-center pointer-events-none md:static md:relative md:col-start-1 md:row-start-1 md:row-span-4 md:h-full md:flex-1 md:rounded-[36px] md:border md:border-emerald-200 md:bg-emerald-900/10 md:px-6 md:py-6 md:shadow-[0_25px_80px_rgba(4,118,110,0.25)]">
+              {result && (
+                <div
+                  className={`absolute inset-0 z-[1] ${
+                    isRed
+                      ? "bg-gradient-to-br from-[#1a0000]/90 via-[#240000]/80 to-[#0a0000]/95"
+                      : "bg-gradient-to-br from-emerald-900/70 via-emerald-800/60 to-emerald-900/80"
+                  }`}
+                />
+              )}
               <video
                 ref={videoRef}
                 playsInline
                 autoPlay
                 muted
-                className={`absolute inset-0 z-[1] h-full w-full object-cover ${previewSrc ? "opacity-0" : "opacity-100"}`}
+                className={`absolute inset-0 z-[1] h-full w-full object-cover ${
+                  result ? "opacity-0" : mode === "photo" && previewSrc && !result ? "opacity-0" : "opacity-100"
+                }`}
               />
-              {previewSrc && (
+              {mode === "photo" && previewSrc && !result && (
                 <img
                   src={previewSrc}
                   alt="선택한 음식 사진"

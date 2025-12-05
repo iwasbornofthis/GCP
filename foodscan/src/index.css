@@ -31,3 +31,99 @@
     text-decoration: none;
   }
 }
+
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 50;
+  padding: 12px 16px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  color: #fefefe;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle.active {
+  background: linear-gradient(135deg, #b30000, #ff1a1a);
+  filter: drop-shadow(0 10px 22px rgba(255, 0, 0, 0.35));
+}
+
+.red-theme {
+  background: radial-gradient(circle at 20% 20%, rgba(255, 34, 34, 0.18), transparent 32%),
+    radial-gradient(circle at 80% 0%, rgba(255, 0, 0, 0.18), transparent 26%),
+    #0a0000;
+  color: #ffecec;
+}
+
+.red-theme body {
+  background: radial-gradient(circle at 10% 10%, rgba(255, 51, 51, 0.2), transparent 30%),
+    radial-gradient(circle at 90% 20%, rgba(255, 17, 17, 0.25), transparent 35%),
+    linear-gradient(135deg, #190000 0%, #0a0000 45%, #2a0000 100%);
+  color: #ffecec;
+}
+
+.red-theme .bg-emerald-50,
+.red-theme .bg-white {
+  background-color: #1c0000 !important;
+  color: #ffecec !important;
+  border-color: rgba(255, 58, 58, 0.35) !important;
+}
+
+.red-theme .text-gray-500,
+.red-theme .text-gray-600,
+.red-theme .text-gray-700,
+.red-theme .text-gray-800,
+.red-theme .text-gray-900,
+.red-theme .text-emerald-600 {
+  color: #ffc7c7 !important;
+}
+
+.red-theme button,
+.red-theme .btn {
+  background: linear-gradient(135deg, #ff1a1a, #b30000);
+  color: #fff !important;
+  border: 1px solid rgba(255, 69, 69, 0.5);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.25);
+}
+
+.red-theme button:hover,
+.red-theme .btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.red-theme input,
+.red-theme textarea,
+.red-theme select {
+  background: #2a0002;
+  color: #ffecec;
+  border: 1px solid rgba(255, 69, 69, 0.5);
+}
+
+.red-theme .card-surface {
+  background: rgba(30, 0, 0, 0.9);
+  border: 1px solid rgba(255, 42, 42, 0.35);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+}
+
+.red-theme .pill {
+  background: linear-gradient(135deg, #ff1f1f, #a80000);
+  color: #fff;
+  border: none;
+}
+
+.photo-blue-filter {
+  /* 민트 톤: 살짝 밝은 청록 + 연한 시안 */
+  filter: saturate(1.1) hue-rotate(-120deg) brightness(1.12) contrast(1.0);
+  mix-blend-mode: screen;
+}
