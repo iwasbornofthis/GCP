@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\MealRecord;
+use App\Services\MealRecommendationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class MealController extends Controller
 {
+    public function __construct(
+        private readonly MealRecommendationService $recommendationService,
+    ) {
+    }
+
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
@@ -101,6 +107,69 @@ class MealController extends Controller
                 'avg_score' => $riskStats->avg_score !== null ? round((float) $riskStats->avg_score, 1) : null,
             ],
             'records' => $records,
+        ]);
+    }
+
+    public function recommend(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'date' => ['nullable', 'date'],
+        ]);
+
+        $date = $validated['date'] ?? Carbon::now()->toDateString();
+        $today = Carbon::now()->toDateString();
+
+        if ($date !== $today) {
+            return response()->json([
+                'message' => '오늘 날짜에 대해서만 추천을 제공합니다.',
+            ], 422);
+        }
+
+        $baseQuery = MealRecord::query()
+            ->where('user_id', $request->user()->id)
+            ->whereDate('recorded_at', $date);
+
+        $records = (clone $baseQuery)->orderByDesc('created_at')->limit(50)->get();
+
+        if ($records->isEmpty()) {
+            return response()->json([
+                'message' => '오늘 기록된 식단이 없습니다.',
+            ], 400);
+        }
+
+        $totals = (clone $baseQuery)->selectRaw(
+            'COALESCE(SUM(energy_kcal),0) AS energy_kcal,
+             COALESCE(SUM(carbohydrate_g),0) AS carbohydrate_g,
+             COALESCE(SUM(sugars_g),0) AS sugars_g,
+             COALESCE(SUM(protein_g),0) AS protein_g,
+             COALESCE(SUM(fat_g),0) AS fat_g'
+        )->first();
+
+        $payloadTotals = [
+            'energy_kcal' => (float) $totals->energy_kcal,
+            'carbohydrate_g' => (float) $totals->carbohydrate_g,
+            'sugars_g' => (float) $totals->sugars_g,
+            'protein_g' => (float) $totals->protein_g,
+            'fat_g' => (float) $totals->fat_g,
+        ];
+
+        $recordsPayload = $records->map(function (MealRecord $record) {
+            return [
+                'food_name' => $record->food_name,
+                'energy_kcal' => $record->energy_kcal,
+                'carbohydrate_g' => $record->carbohydrate_g,
+                'sugars_g' => $record->sugars_g,
+                'protein_g' => $record->protein_g,
+                'fat_g' => $record->fat_g,
+                'glucose_risk_level' => $record->glucose_risk_level,
+            ];
+        })->all();
+
+        $recommendation = $this->recommendationService->recommend($recordsPayload, $payloadTotals);
+
+        return response()->json([
+            'date' => $date,
+            'recommendation' => $recommendation,
         ]);
     }
 

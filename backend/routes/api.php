@@ -16,4 +16,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/foods/analyze', FoodAnalysisController::class);
     Route::post('/meals', [MealController::class, 'store']);
     Route::get('/meals/summary', [MealController::class, 'summary']);
+    Route::post('/meals/recommendations', [MealController::class, 'recommend']);
 });

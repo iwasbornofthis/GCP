@@ -59,6 +59,10 @@ function MealSummary({ token, apiBase, isRed }) {
   const [weeklyData, setWeeklyData] = useState([]);
   const [weeklyLoading, setWeeklyLoading] = useState(false);
   const [weeklyError, setWeeklyError] = useState("");
+  const [recommendation, setRecommendation] = useState(null);
+  const [recLoading, setRecLoading] = useState(false);
+  const [recError, setRecError] = useState("");
+  const [recOpen, setRecOpen] = useState(false);
 
   const fetchSummaryRequest = async (targetDate) => {
     const response = await fetch(
@@ -138,6 +142,36 @@ function MealSummary({ token, apiBase, isRed }) {
       fetchWeekly(date);
     }
   }, [token, date]);
+
+  const isTodaySelected = date === todayString();
+
+  const requestRecommendation = async () => {
+    setRecLoading(true);
+    setRecError("");
+    setRecommendation(null);
+    try {
+      const response = await fetch(`${apiBase}/meals/recommendations`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ date }),
+      });
+      const text = await response.text();
+      const payload = text ? JSON.parse(text) : null;
+      if (!response.ok) {
+        throw new Error(payload?.message || "추천을 가져오지 못했어요.");
+      }
+      setRecommendation(payload?.recommendation ?? null);
+      setRecOpen(true);
+    } catch (err) {
+      setRecError(err.message || "추천을 가져오지 못했어요.");
+    } finally {
+      setRecLoading(false);
+    }
+  };
 
   const records = useMemo(() => (Array.isArray(data?.records) ? data.records : []), [data]);
   const totals = data?.totals ?? {};
@@ -385,6 +419,18 @@ function MealSummary({ token, apiBase, isRed }) {
           >
             새로고침
           </button>
+          <button
+            type="button"
+            onClick={requestRecommendation}
+            disabled={!token || !isTodaySelected || recLoading}
+            className={`rounded-xl px-3 py-2 text-xs font-semibold shadow-sm transition ${
+              isRed
+                ? "border border-red-500/40 bg-[#330000] text-red-50 hover:border-red-300 disabled:opacity-50"
+                : "border border-emerald-200 bg-emerald-50 text-emerald-800 hover:border-emerald-400 disabled:opacity-50"
+            }`}
+          >
+            {recLoading ? "추천 요청 중..." : "오늘 식단 추천"}
+          </button>
         </div>
       </div>
 
@@ -484,6 +530,62 @@ function MealSummary({ token, apiBase, isRed }) {
           )}
         </div>
       </div>
+
+      {recOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4">
+          <div
+            className={`w-full max-w-lg rounded-2xl p-4 shadow-xl ${
+              isRed
+                ? "border border-red-500/40 bg-[#140000] text-red-50"
+                : "border border-emerald-200 bg-white text-emerald-950"
+            }`}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className={`m-0 text-xs font-semibold uppercase ${tone.subtitle}`}>오늘 식단 추천</p>
+                <p className={`m-0 text-base font-bold ${tone.title}`}>맞춤 제안</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setRecOpen(false)}
+                className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                  isRed
+                    ? "border border-red-500/40 text-red-100 hover:border-red-300"
+                    : "border border-emerald-200 text-emerald-800 hover:border-emerald-400"
+                }`}
+              >
+                닫기
+              </button>
+            </div>
+            {recLoading && <p className={`mt-3 text-sm ${tone.loading}`}>불러오는 중...</p>}
+            {recError && <p className={`mt-3 text-sm ${tone.error}`}>{recError}</p>}
+            {!recLoading && !recError && recommendation && (
+              <div className="mt-3 space-y-3">
+                {recommendation.summary && (
+                  <p className={`m-0 text-sm ${tone.title}`}>{recommendation.summary}</p>
+                )}
+                {Array.isArray(recommendation.recommendations) && recommendation.recommendations.length > 0 && (
+                  <div className="space-y-2">
+                    {recommendation.recommendations.map((item, idx) => (
+                      <div
+                        key={`${item.name ?? idx}-${idx}`}
+                        className={`rounded-xl border p-3 text-sm ${
+                          isRed ? "border-red-500/40 bg-[#1d0000]" : "border-emerald-200 bg-emerald-50"
+                        }`}
+                      >
+                        <p className="m-0 font-semibold">{item.name ?? "추천안"}</p>
+                        {item.reason && (
+                          <p className="m-0 text-[13px] opacity-80">{item.reason}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
